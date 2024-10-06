@@ -1,6 +1,12 @@
-const mongoose = require("mongoose");
 const logger = require("./logger");
+const MongoClient = require("mongodb").MongoClient;
 
 module.exports = function () {
-  mongoose.connect("mongodb://localhost:27017/todo").then(() => logger.log("info", "MongoDB connected"));
+  const url = "mongodb://localhost:27017/todo";
+  const client = new MongoClient(url);
+
+  client
+    .connect()
+    .then(() => logger.log("info", "MongoDB connected"))
+    .catch((err) => logger.log("error", err));
 };
